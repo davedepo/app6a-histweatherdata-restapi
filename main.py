@@ -4,12 +4,15 @@ import pandas as pd
 # to create website object instances
 app = Flask("__name__")
 
+stations = pd.read_csv("data_small/stations.txt", skiprows=17)
+stations = stations[["STAID", "STANAME                                 ", "CN"]]
+
 
 # to connect HTML pages with website object - use .route() method
 @app.route("/")
 # to render HTML document from "templates" dir/folder - import render_template
 def home():
-	return render_template("home.html")
+	return render_template("home.html", data=stations.to_html())
 
 
 # to add more pages
